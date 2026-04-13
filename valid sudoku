@@ -1,0 +1,39 @@
+#include <vector>
+#include <unordered_set>
+#include <string>
+
+using namespace std;
+
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+        // Use a set to store strings representing seen numbers
+        // Format: "row_idx" + 'c' + val, "col_idx" + 'r' + val, "box_idx" + 'b' + val
+        unordered_set<string> seen;
+
+        for (int i = 0; i < 9; ++i) {
+            for (int j = 0; j < 9; ++j) {
+                char val = board[i][j];
+                if (val != '.') {
+                    // Unique strings for row, column, and sub-box
+                    string row_key = to_string(i) + "r" + val;
+                    string col_key = to_string(j) + "c" + val;
+                    string box_key = to_string(i / 3) + to_string(j / 3) + "b" + val;
+
+                    // If any of these exist in the set, the board is invalid
+                    if (seen.count(row_key) || 
+                        seen.count(col_key) || 
+                        seen.count(box_key)) {
+                        return false;
+                    }
+
+                    // Add current character to set
+                    seen.insert(row_key);
+                    seen.insert(col_key);
+                    seen.insert(box_key);
+                }
+            }
+        }
+        return true;
+    }
+};
