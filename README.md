@@ -1,1 +1,1 @@
-# Leetcode-solutions_medium
+# Leetcode-solutions
